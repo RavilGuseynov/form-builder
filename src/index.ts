@@ -7,10 +7,10 @@ const app = express();
 
 app.use('/api/config', require('./routes/config.routes'));
 
-app.use('/', express.static(path.join(__dirname, '..', 'client', 'build')))
+app.use('/', express.static(path.join(__dirname, '..', 'client', 'build')));
 app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, '..', 'client', 'build', 'index.html'))
-})
+  res.sendFile(path.resolve(__dirname, '..', 'client', 'build', 'index.html'));
+});
 
 const PORT = process.env.PORT || 5000;
 const HOST = process.env.HOST || '0.0.0.0';
@@ -31,5 +31,8 @@ async function start() {
   }
 }
 
-start();
+start()
+  .then(() => {
+    console.log('SUCCESS');
+  });
 

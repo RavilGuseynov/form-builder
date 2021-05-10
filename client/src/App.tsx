@@ -11,7 +11,7 @@ interface IConfigResponse extends AxiosResponse{
   data: IConfig[];
 }
 
-function App() {
+const App: React.FC = () => {
 
   const [data, setData] = React.useState<IConfig[]>([]);
   const [text, setText] = React.useState<string>('');
@@ -21,21 +21,20 @@ function App() {
       text,
     })
       .then(() => {
-        console.log('data loaded')
-      })
-  }
+        alert('data loaded');
+      });
+  };
 
-  const onChangeHandler = (e: any) => {
-    setText(e.target.value);
-  }
+  const onChangeHandler = (e: React.FormEvent<HTMLInputElement>) => {
+    setText(e.currentTarget.value);
+  };
 
   React.useEffect(() => {
     axios.get('/api/config')
       .then((res: IConfigResponse) => {
-        console.log(res.data);
         setData(res.data);
-      })
-  }, [])
+      });
+  }, []);
   return (
     <div className="App">
       <header className="App-header">
@@ -43,7 +42,7 @@ function App() {
           data.map((item) => {
             return (
               <div key={item._id}>{item.text}</div>
-            )
+            );
           })
         }
       </header>
@@ -60,6 +59,6 @@ function App() {
       </label>
     </div>
   );
-}
+};
 
 export default App;
