@@ -1,30 +1,28 @@
 const express = require('express');
-const config = require('config');
 const mongoose = require('mongoose');
 const path = require('path');
 
+require('dotenv').config();
 const app = express();
 
 app.use('/api/config', require('./routes/config.routes'));
 
-if (process.env.NODE_ENV === 'production') {
-  app.use('/', express.static(path.join(__dirname, 'client', 'build')))
+app.use('/', express.static(path.join(__dirname, '..', 'client', 'build')))
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, '..', 'client', 'build', 'index.html'))
+})
 
-  app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
-  })
-}
-
-const PORT = config.get('port') || 5000;
-const MONGO_URI = config.get('mongoUri');
+const PORT = process.env.PORT || 5000;
+const HOST = process.env.HOST || '0.0.0.0';
+const DB_URI = process.env.DB_URI;
 
 async function start() {
   try {
-    await mongoose.connect(MONGO_URI, {
+    await mongoose.connect(DB_URI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
-    app.listen(PORT, () => {
+    app.listen(PORT, HOST,() => {
       console.log(`Server has been started on port ${PORT}...`);
     });
   } catch (error) {
