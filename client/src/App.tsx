@@ -1,19 +1,15 @@
 import React from 'react';
 import './App.css';
-import axios, {AxiosResponse} from 'axios';
+import axios from 'axios';
+import Form from './components/form';
+import { BrowserRouter as Router, Route} from 'react-router-dom';
+import {Button} from '@material-ui/core';
+import Icon from '@material-ui/core/Icon';
 
-interface IConfig {
-  text: string;
-  _id: string;
-}
+const HomePage: React.FC = () => (<span>Home page</span>);
 
-interface IConfigResponse extends AxiosResponse{
-  data: IConfig[];
-}
+const UploadConfig: React.FC = () => {
 
-const App: React.FC = () => {
-
-  const [data, setData] = React.useState<IConfig[]>([]);
   const [text, setText] = React.useState<string>('');
 
   const sendConfig = () => {
@@ -29,34 +25,33 @@ const App: React.FC = () => {
     setText(e.currentTarget.value);
   };
 
-  React.useEffect(() => {
-    axios.get('/api/config')
-      .then((res: IConfigResponse) => {
-        setData(res.data);
-      });
-  }, []);
+  return (
+    <label>
+      <input
+        type="text"
+        onChange={onChangeHandler}
+      />
+      <Button
+        color="primary"
+        variant="outlined"
+        onClick={sendConfig}
+      >
+        Send
+        <Icon color="primary">send</Icon>
+      </Button>
+    </label>
+  );
+};
+
+const App: React.FC = () => {
+
   return (
     <div className="App">
-      <header className="App-header">
-        {
-          data.map((item) => {
-            return (
-              <div key={item._id}>{item.text}</div>
-            );
-          })
-        }
-      </header>
-      <label>
-        <input
-          type="text"
-          onChange={onChangeHandler}
-        />
-        <button
-          onClick={sendConfig}
-        >
-          Send
-        </button>
-      </label>
+      <Router>
+        <Route path='/' component={HomePage} exact />
+        <Route path='/upload' component={UploadConfig} />
+        <Route path='/form' component={Form}/>
+      </Router>
     </div>
   );
 };
