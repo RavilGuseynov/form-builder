@@ -10,7 +10,7 @@ const Header: React.FC = () => {
         <ul id="nav" className="right">
           <li><Link to="/upload">Upload new config</Link></li>
           <li><Link to="/form">Form</Link></li>
-          <li><Link to="/">Home</Link></li>
+          <li><Link to="/doc">Documentation</Link></li>
         </ul>
       </div>
     </nav>
