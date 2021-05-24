@@ -1,8 +1,15 @@
 const { Schema, model } = require('mongoose');
 
-const schema = new Schema({
-  text: {type: String, required: true},
-  id: {type: String},
+const FieldSchema = new Schema({
+  label: String,
+  id: Number,
+  type: String,
+  component: String,
+  placeholder: String,
+});
+
+const ConfigSchema = new Schema({
+  fields: [FieldSchema],
 }, {collection: 'configs'});
 
-module.exports = model('Config', schema);
+module.exports = model('Config', ConfigSchema);
