@@ -35,18 +35,20 @@ const compList = [TextInput, MaskedField];
 const Form: React.FC = () => {
 
   const [data, setData] = React.useState<IField[]>([]);
+  const [configFetched, setConfigFetched] = React.useState<boolean>(false);
 
   React.useEffect(() => {
     axios.get('/api/config')
       .then((res: IConfigResponse) => {
         setData(res.data.fields);
+        setConfigFetched(true);
       });
   }, []);
 
   return (
     <form className="form-from">
       <div className="card-panel">
-        <Builder fields={data} components={compList}/>
+        {configFetched && <Builder fields={data} components={compList}/>}
         <button className="btn">Отправить форму</button>
       </div>
     </form>
