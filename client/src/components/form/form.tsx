@@ -30,6 +30,9 @@ const MaskedField: FC<IField> = ({label, placeholder}) => {
   );
 };
 
+TextInput.displayName = 'TextInput';
+MaskedField.displayName = 'MaskedField';
+
 const compList = [TextInput, MaskedField];
 
 const Form: React.FC = () => {

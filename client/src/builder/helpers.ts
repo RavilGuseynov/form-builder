@@ -4,7 +4,9 @@ import React from 'react';
 export const createComponentsObject = (components: React.FC<IField>[]): IComponents => {
   const result: IComponents = {};
   components.forEach((component) => {
-    result[component.name] = component;
+    if (component.displayName) {
+      result[component.displayName] = component;
+    }
   });
   return result;
 };
