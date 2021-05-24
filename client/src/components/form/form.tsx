@@ -2,6 +2,7 @@ import React, {FC, Fragment} from 'react';
 import Builder from '../../builder';
 import {IConfig, IField} from '../../builder/interfaces.h';
 import axios, {AxiosResponse} from 'axios';
+import './from.css';
 
 interface IConfigResponse extends AxiosResponse{
   data: IConfig;
@@ -43,8 +44,11 @@ const Form: React.FC = () => {
   }, []);
 
   return (
-    <form>
-      <Builder fields={data} components={compList}/>
+    <form className="form-from">
+      <div className="card-panel">
+        <Builder fields={data} components={compList}/>
+        <button className="btn">Отправить форму</button>
+      </div>
     </form>
   );
 };

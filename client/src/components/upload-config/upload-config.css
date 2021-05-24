@@ -1,0 +1,13 @@
+.config-upload {
+    width: 500px;
+    margin: 60px auto;
+}
+
+.input-config {
+    height: 300px;
+    border-radius: 15px;
+    padding: 10px;
+    outline: none;
+    font-size: 16px;
+    resize: none;
+}
