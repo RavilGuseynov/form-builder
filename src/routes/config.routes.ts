@@ -11,7 +11,6 @@ const router = Router();
 router.post(
   '/',
   jsonParser,
-  // username must be an email
   body('text').isString(),
   async (req, res) => {
     try {
@@ -20,11 +19,8 @@ router.post(
         return res.status(400).json({errors: errors.array(), message: 'invalid data'});
       }
       const { text } = req.body;
-      console.log('text\n', text);
       const newConfig = new Config(JSON.parse(text));
-      console.log('\nTEXT AFTER\n');
       await newConfig.save();
-      console.log('after after');
       res.status(200).json({message: 'Новый конфиг успешно сохранен'});
 
     } catch (e) {
@@ -40,7 +36,7 @@ router.get('/', async (req, res) => {
     const data = await Config.find().sort({ _id: -1 }).limit(1);
     res.status(200).json(data[0]);
   } catch (error) {
-    console.log(error);
+    console.error(error);
     res.status(500).json(error);
   }
 });
